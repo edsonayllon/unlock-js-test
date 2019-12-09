@@ -5,6 +5,8 @@
 Minimal viable implementation of Unlock-Protocol. 
 
 Unlock enables paid membership tiers enabled through Ethereum smart contracts.
+
+See: https://github.com/unlock-protocol/react-example.
  
 ## `index.html`
 
