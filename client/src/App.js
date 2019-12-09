@@ -52,7 +52,7 @@ function App() {
             </div>
           ),
           "pending": <div>Loading Unlock</div>
-        }[locked]} 
+        }[locked] || null} 
       </header>
     </div>
   );
