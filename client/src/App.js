@@ -1,23 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react'; 
 import './App.css';
 
 function App() {
+  const [locked, setLocked] = useState("pending");
+
+  // did mount
+  useEffect(() => {
+    window.addEventListener("unlockProtocol", unlockHandler);
+  },[])
+
+  // unmount
+  useEffect(() => {
+    return () => {
+      window.removeEventListener("unlockProtocol", unlockHandler);
+    }
+  }, []);
+
+  const unlockHandler = (e) => {
+    setLocked(e.detail);
+    /*
+      Status can either be 'unlocked' or 'locked'...
+      If state is 'unlocked': implement code here which will be triggered when 
+      the current visitor has a valid lock key  
+      If state is 'locked': implement code here which will be
+      triggered when the current visitor does not have a valid lock key
+    */
+  }
+
+  const checkout = () => {
+    window.unlockProtocol && window.unlockProtocol.loadCheckoutModal()
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {{
+          "locked": (
+            <div onClick={checkout} style={{ cursor: "pointer" }}>
+              Unlock me!{" "}
+              <span aria-label="locked" role="img">
+                🔒
+              </span>
+            </div>
+          ),
+          "unlocked": (
+            <div>
+              Unlocked!{" "}
+              <span aria-label="unlocked" role="img">
+                🗝
+              </span>
+            </div>
+          ),
+          "pending": <div>Loading Unlock</div>
+        }[locked]} 
       </header>
     </div>
   );
