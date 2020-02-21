@@ -7,10 +7,7 @@ function App() {
   // did mount
   useEffect(() => {
     window.addEventListener("unlockProtocol", unlockHandler);
-  },[])
 
-  // unmount
-  useEffect(() => {
     return () => {
       window.removeEventListener("unlockProtocol", unlockHandler);
     }
